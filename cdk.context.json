@@ -1,0 +1,54 @@
+{
+  "acknowledged-issue-numbers": [
+    32775
+  ],
+  "vpc-provider:account=396608771737:filter.tag:Name=LAMP-vpc:region=eu-west-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-06533fadfd4390f9e",
+    "vpcCidrBlock": "10.0.0.0/16",
+    "ownerAccountId": "396608771737",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Public",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-027973db0c48ad2d4",
+            "cidr": "10.0.0.0/20",
+            "availabilityZone": "eu-west-1a",
+            "routeTableId": "rtb-0f642e0814ff76a4b"
+          },
+          {
+            "subnetId": "subnet-0f23525e14b1f7751",
+            "cidr": "10.0.16.0/20",
+            "availabilityZone": "eu-west-1b",
+            "routeTableId": "rtb-0f642e0814ff76a4b"
+          }
+        ]
+      },
+      {
+        "name": "Isolated",
+        "type": "Isolated",
+        "subnets": [
+          {
+            "subnetId": "subnet-0ca04fd1a361b5713",
+            "cidr": "10.0.128.0/20",
+            "availabilityZone": "eu-west-1a",
+            "routeTableId": "rtb-024be9b875580b731"
+          },
+          {
+            "subnetId": "subnet-00a38aa1b436c0385",
+            "cidr": "10.0.144.0/20",
+            "availabilityZone": "eu-west-1b",
+            "routeTableId": "rtb-05975a01fb9d46cae"
+          }
+        ]
+      }
+    ]
+  },
+  "availability-zones:account=396608771737:region=eu-west-1": [
+    "eu-west-1a",
+    "eu-west-1b",
+    "eu-west-1c"
+  ]
+}
