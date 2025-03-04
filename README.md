@@ -1,8 +1,25 @@
 
-# Welcome to your CDK Python project!
 
-This is a blank project for CDK development with Python.
 
+## The AWS Services Used
+
+This project uses the following AWS services:
+
+1. **Amazon VPC**: Provides a virtual network for hosting resources in isolated subnets.
+2. **Amazon ECS**: Hosts the PHP application in Fargate tasks.
+3. **Amazon ECR**: Stores the Docker image for the PHP application.
+4. **Amazon RDS**: Hosts the MySQL database for the application.
+5. **AWS Secrets Manager**: Securely stores and manages database credentials.
+6. **Amazon EC2**: Provides security groups and networking components.
+7. **Amazon ALB**: Distributes incoming traffic to ECS tasks and performs health checks.
+8. **AWS IAM**: Manages permissions for the ECS task execution role.
+9. **Amazon CloudWatch Logs**: Stores logs for ECS tasks and RDS instance.
+10. **AWS CDK**: Defines and deploys the infrastructure as code.
+
+
+
+
+## Welcome to your CDK Python project!
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 This project is set up like a standard Python project.  The initialization
