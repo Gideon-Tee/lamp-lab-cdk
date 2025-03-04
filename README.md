@@ -10,11 +10,10 @@ This project uses the following AWS services:
 3. **Amazon ECR**: Stores the Docker image for the PHP application.
 4. **Amazon RDS**: Hosts the MySQL database for the application.
 5. **AWS Secrets Manager**: Securely stores and manages database credentials.
-6. **Amazon EC2**: Provides security groups and networking components.
-7. **Amazon ALB**: Distributes incoming traffic to ECS tasks and performs health checks.
-8. **AWS IAM**: Manages permissions for the ECS task execution role.
-9. **Amazon CloudWatch Logs**: Stores logs for ECS tasks and RDS instance.
-10. **AWS CDK**: Defines and deploys the infrastructure as code.
+6. **Amazon ALB**: Distributes incoming traffic to ECS tasks and performs health checks.
+7. **AWS IAM**: Manages permissions for the ECS task execution role.
+8. **Amazon CloudWatch Logs**: Stores logs for ECS tasks and RDS instance.
+9. **AWS CDK**: Defines and deploys the infrastructure as code.
 
 
 
