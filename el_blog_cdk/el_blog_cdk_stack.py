@@ -241,8 +241,48 @@ class ElBlogCdkStack(Stack):
             )
         )
 
+        # MySQL Client Task Definition
+        mysql_client_task_definition = ecs.FargateTaskDefinition(
+            self, "MySQLClientTaskDef",
+            cpu=256,
+            memory_limit_mib=512,
+            execution_role=execution_role  # Reuse the same execution role
+        )
+
+        # MySQL Client Container
+        mysql_client_container = mysql_client_task_definition.add_container(
+            "MySQLClientContainer",
+            image=ecs.ContainerImage.from_registry("mysql:8.0"),  # Official MySQL client image
+            logging=ecs.LogDrivers.aws_logs(
+                stream_prefix="mysql-client",
+                log_retention=logs.RetentionDays.ONE_MONTH
+            ),
+            environment={
+                "MYSQL_HOST": db_instance.db_instance_endpoint_address,  # RDS endpoint
+                "MYSQL_PORT": "3306",
+                "MYSQL_DATABASE": "maindb",
+            },
+            secrets={
+                "MYSQL_USER": ecs.Secret.from_secrets_manager(db_secret, "username"),
+                "MYSQL_PASSWORD": ecs.Secret.from_secrets_manager(db_secret, "password")
+            },
+            command=["sleep", "infinity"]  # Keep the container running
+        )
+
+        # MySQL Client Service
+        mysql_client_service = ecs.FargateService(
+            self, "MySQLClientService",
+            cluster=cluster,
+            task_definition=mysql_client_task_definition,
+            security_groups=[ecs_sg],  # Reuse the ECS security group
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
+            desired_count=1  # Only one instance is needed
+        )
+
+
         # Outputs
         cdk.CfnOutput(self, "ALB_DNS", value=alb.load_balancer_dns_name)
         cdk.CfnOutput(self, "ClusterName", value=cluster.cluster_name)
         cdk.CfnOutput(self, "EcsServiceName", value=service.service_name)
         cdk.CfnOutput(self, "RDS_Endpoint", value=db_instance.db_instance_endpoint_address)
+        cdk.CfnOutput(self, "MySQLClientServiceName", value=mysql_client_service.service_name)
