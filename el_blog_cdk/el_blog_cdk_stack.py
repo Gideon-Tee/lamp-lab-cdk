@@ -8,6 +8,8 @@ from aws_cdk import (
     Stack,
     aws_logs as logs,
     Duration,
+    aws_cloudwatch as cloudwatch,
+    aws_s3 as s3,
 )
 import aws_cdk as cdk
 from constructs import Construct
@@ -15,7 +17,7 @@ from aws_cdk import aws_elasticloadbalancingv2 as elbv2
 from aws_cdk import aws_applicationautoscaling as appscaling
 
 
-class ElBlogCdkStack(Stack):
+class ElBlogCdkStackUpdated(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -199,7 +201,7 @@ class ElBlogCdkStack(Stack):
             task_definition=task_definition,
             security_groups=[ecs_sg],
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
-            desired_count=2,
+            desired_count=1,
             health_check_grace_period=Duration.minutes(3)  # Allow time for app startup
         )
 
@@ -276,7 +278,8 @@ class ElBlogCdkStack(Stack):
             task_definition=mysql_client_task_definition,
             security_groups=[ecs_sg],  # Reuse the ECS security group
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
-            desired_count=1  # Only one instance is needed
+            desired_count=0, # Only one instance is needed but populating the rds, destroy
+            enable_execute_command=True
         )
 
 
