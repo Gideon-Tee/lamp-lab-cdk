@@ -220,11 +220,25 @@ class ElBlogCdkStackUpdated(Stack):
         )
 
         # Load Balancer
+        # Create an S3 bucket for ALB access logs
+        log_bucket = s3.Bucket(
+            self, "AlbLogBucket",
+            bucket_name="elblog-albaccesslogs",
+            removal_policy=cdk.RemovalPolicy.DESTROY  # Delete the bucket when the stack is deleted
+        )
+
+        # Create the ALB
         alb = elbv2.ApplicationLoadBalancer(
             self, "EcsALB",
             vpc=vpc,
             internet_facing=True,
             security_group=alb_sg
+        )
+
+        # Enable S3 access logs for the ALB
+        alb.log_access_logs(
+            bucket=log_bucket,  # S3 bucket for logs
+            prefix="alb-logs"  # Optional: Prefix for log files
         )
 
         # Listener and Target Group
